@@ -81,3 +81,7 @@ crashlytics-build.properties
 # Pixem
 /Assets/Pixem/
 /Assets/Pixem.meta
+
+# PixelFantasy
+/Assets/PixelFantasy/
+/Assets/PixelFantasy.meta
