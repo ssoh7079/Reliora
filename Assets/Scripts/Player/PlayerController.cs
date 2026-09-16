@@ -38,12 +38,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (status.IsDead)
-        {
-            moveX = 0.0f;
-            return;
-        }
-        if (status.IsHit)
+        if (status.IsDead || status.IsHit)
         {
             moveX = 0.0f;
             return;
