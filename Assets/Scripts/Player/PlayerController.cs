@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Camera mainCam;
     private PlayerStatus status;
+    private PlayerCombat combat;
 
     private float moveX;
     private float characterScaleX;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         mainCam = Camera.main;
         status = GetComponent<PlayerStatus>();
+        combat = GetComponent<PlayerCombat>();
 
         characterScaleX = Mathf.Abs(character.localScale.x);
     }
@@ -48,7 +50,8 @@ public class PlayerController : MonoBehaviour
         CheckGround();
         Jump();
         Flip();
-        AnimationState();
+
+        if (!combat.IsAttack) AnimationState();
     }
     private void FixedUpdate()
     {
