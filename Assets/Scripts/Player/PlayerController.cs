@@ -28,7 +28,9 @@ public class PlayerController : MonoBehaviour
     private const string RunAnim = "Run";
     private const string JumpAnim = "Jump";
 
-    
+    public int FacingDir => character.localScale.x >= 0.0f ? 1 : -1;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -49,9 +51,12 @@ public class PlayerController : MonoBehaviour
         MoveInput();
         CheckGround();
         Jump();
-        Flip();
 
-        if (!combat.IsAttack) AnimationState();
+        if (!combat.IsAttack)
+        {
+            Flip();
+            AnimationState();
+        }
     }
     private void FixedUpdate()
     {
