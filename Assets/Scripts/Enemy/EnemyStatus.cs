@@ -2,23 +2,35 @@
 
 public class EnemyStatus : MonoBehaviour
 {
-    [SerializeField] private int maxHp = 30;
+    [SerializeField] private EnemyData enemyData;
 
-    private int hp;
+    private int currentHp;
+    private EnemyController controller;
+
+    public int CurrentHp => currentHp;
+    public int MaxHp => enemyData.MaxHp;
 
     private void Awake()
     {
-        hp = maxHp;
+        controller = GetComponent<EnemyController>();
+        currentHp = enemyData.MaxHp;
     }
 
     public void TakeDamage(int damage)
     {
-        hp -= damage;
-        hp = Mathf.Max(hp, 0);
+        if (controller.State == EnemyState.Dead) return;
+
+        currentHp -= damage;
+        currentHp = Mathf.Max(currentHp, 0);
 
         //확인용
-        Debug.Log($"Enemy HP : {hp} / {maxHp}");
+        Debug.Log($"Enemy HP : {currentHp} / {enemyData.MaxHp}");
 
-        if (hp <= 0) Destroy(gameObject);
+        if (currentHp <= 0)
+        {
+            controller.Die();
+            return;
+        }
+        controller.Hit();
     }
 }

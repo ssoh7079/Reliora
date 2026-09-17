@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour
 {
     [SerializeField] private int maxHp = 100;
-    [SerializeField] private float hitDuration = 0.6f;
+    [SerializeField] private float hitDuration = 0.35f;
     [SerializeField] private Animator animator;
 
     private PlayerController controller;
