@@ -35,6 +35,8 @@ public class PlayerCombat : MonoBehaviour
     //AttackSlash 애니메이션 이벤트
     public void AttackHit()
     {
+        if (!IsAttack) return;
+
         Vector2 center = (Vector2)attackPoint.position + Vector2.right * controller.FacingDir * (attackSize.x * 0.5f);
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, attackSize, 0.0f, enemyLayer);
         foreach (Collider2D hit in hits)
@@ -46,9 +48,19 @@ public class PlayerCombat : MonoBehaviour
     //AttackSlash 애니메이션 이벤트
     public void AttackEnd()
     {
+        if (!IsAttack) return;
         IsAttack = false;
         controller.ResetAnimation();
     }
+    //피격, 사망 시 공격 강제 중단
+    public void CancelAttack()
+    {
+        if (!IsAttack) return;
+        IsAttack = false;
+        animator.ResetTrigger("AttackSlash");
+        controller.ResetAnimation();
+    }
+    
 
 
     private void OnDrawGizmosSelected()

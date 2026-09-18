@@ -3,14 +3,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("이동속도")]
     [SerializeField] private float moveSpeed = 5.0f;
-    [SerializeField] private float jumpPower = 12.0f;
-
-    [SerializeField] private Transform character;
+    
+    [Header("점프")]
+    [SerializeField] private float jumpPower = 15.0f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundRadius = 0.15f;
     [SerializeField] private LayerMask groundLayer;
-
+    
+    [Header("레퍼런스?")]
+    [SerializeField] private Transform character;
     [SerializeField] private Animator animator;
 
     private Rigidbody2D rb;
@@ -20,7 +23,9 @@ public class PlayerController : MonoBehaviour
 
     private float moveX;
     private float characterScaleX;
+    
     private bool isGround;
+    private int jumpCount;
 
     private string currentAnim;
 
@@ -83,13 +88,22 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
-        if (!Keyboard.current.spaceKey.wasPressedThisFrame || !isGround) return;
+        if (!Keyboard.current.spaceKey.wasPressedThisFrame) return;
+        //점프를 누르지 않고, 발판에서 그냥 떨어졌을 경우, 공중에서 점프는 한 번만 가능
+        if (!isGround && jumpCount == 0) jumpCount = 1;
+        if (jumpCount >= 2) return;
+        //2단 점프 시, 점프 애니메이션을 다시 재생
+        if (jumpCount == 1) currentAnim = "";
 
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+
+        jumpCount++;
     }
     private void CheckGround()
     {
         isGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
+        //착지한 경우에만 점프 횟수 초기화
+        if (isGround && rb.linearVelocity.y <= 0.0f) jumpCount = 0;
     }
     private void Flip()
     {
