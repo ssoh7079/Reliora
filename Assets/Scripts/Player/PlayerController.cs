@@ -11,21 +11,34 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundRadius = 0.15f;
     [SerializeField] private LayerMask groundLayer;
+
+    [Header("대시")]
+    [SerializeField] private float dashSpeed = 15.0f;
+    [SerializeField] private float dashDuration = 0.3f;
+    [SerializeField] private float dashCoolTime = 0.5f;
+    [SerializeField] private float ghostSpawnInterval = 0.06f;
     
-    [Header("레퍼런스?")]
+    [Header("레퍼런스")]//레퍼런스 말고 사람이 쓴 것 같은 다른 건 없나?
     [SerializeField] private Transform character;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer bodyRenderer;
 
     private Rigidbody2D rb;
     private Camera mainCam;
+
     private PlayerStatus status;
     private PlayerCombat combat;
 
     private float moveX;
     private float characterScaleX;
-    
+
     private bool isGround;
     private int jumpCount;
+    
+    private float dashTimer;
+    private float dashCoolTimer;
+    private float ghostTimer;
+    private int dashDir;
 
     private string currentAnim;
 
@@ -34,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private const string JumpAnim = "Jump";
 
     public int FacingDir => character.localScale.x >= 0.0f ? 1 : -1;
+    public bool IsDash { get; private set; }
 
 
     private void Awake()
@@ -47,14 +61,23 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (dashCoolTimer > 0.0f) dashCoolTimer -= Time.deltaTime;
         if (status.IsDead || status.IsHit)
         {
             moveX = 0.0f;
+            CancelDash();
+            return;
+        }
+        if (IsDash)
+        {
+            DashUpdate();
             return;
         }
 
         MoveInput();
         CheckGround();
+        Dash();
+        if (IsDash) return;
         Jump();
 
         if (!combat.IsAttack)
@@ -68,6 +91,11 @@ public class PlayerController : MonoBehaviour
         if (status.IsDead)
         {
             rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
+            return;
+        }
+        if (IsDash)
+        {
+            rb.linearVelocity = new Vector2(dashDir * dashSpeed, 0.0f);
             return;
         }
 
@@ -105,14 +133,72 @@ public class PlayerController : MonoBehaviour
         //착지한 경우에만 점프 횟수 초기화
         if (isGround && rb.linearVelocity.y <= 0.0f) jumpCount = 0;
     }
+    private void Dash()
+    {
+        if (!Keyboard.current.leftShiftKey.wasPressedThisFrame) return;
+        if (dashCoolTimer > 0.0f) return;
+        //공격 중 대시하면 공격 캔슬 후 Idle 자세로 변경
+        if (combat.IsAttack)
+        {
+            combat.CancelAttack();
+            animator.Play(IdleAnim, 0, 0.0f);
+            currentAnim = IdleAnim;
+        }
+
+        dashDir = Mathf.Abs(moveX) > 0.01f ? (int)Mathf.Sign(moveX) : FacingDir;
+        IsDash = true;
+        dashTimer = dashDuration;
+        ghostTimer = 0.0f;
+        rb.linearVelocity = new Vector2(dashDir * dashSpeed, 0.0f);
+    }
+    private void DashUpdate()
+    {
+        dashTimer -= Time.deltaTime;
+        ghostTimer -= Time.deltaTime;
+        //대시 중에만 잔상 생성
+        if (ghostTimer <= 0.0f)
+        {
+            SpawnGhost();
+            ghostTimer = ghostSpawnInterval;
+        }
+        if (dashTimer <= 0.0f) EndDash();
+    }
+    private void EndDash()
+    {
+        if (!IsDash) return;
+
+        IsDash = false;
+        dashTimer = 0.0f;
+        dashCoolTimer = dashCoolTime;
+        rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
+        ResetAnimation();
+    }
+    public void CancelDash()
+    {
+        if (!IsDash) return;
+
+        IsDash = false;
+        dashTimer = 0.0f;
+        dashCoolTimer = dashCoolTime;
+        rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
+        ResetAnimation();
+    }
+    private void SpawnGhost()
+    {
+        if (bodyRenderer == null || !bodyRenderer.enabled || bodyRenderer.sprite == null) return;
+
+        GameObject ghost = new GameObject("PlayerGhost");
+        PlayerGhost playerGhost = ghost.AddComponent<PlayerGhost>();
+        playerGhost.Initialize(bodyRenderer);
+    }
     private void Flip()
     {
         if (Mouse.current == null || mainCam == null) return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Vector3 worldPos = mainCam.ScreenToWorldPoint(mousePos);
-
         Vector3 scale = character.localScale;
+
         scale.x = worldPos.x >= transform.position.x ? characterScaleX : -characterScaleX;
         character.localScale = scale;
     }

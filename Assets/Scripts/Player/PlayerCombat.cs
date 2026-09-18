@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     }
     void Update()
     {
-        if (status.IsDead || status.IsHit || IsAttack) return;
+        if (status.IsDead || status.IsHit || controller.IsDash || IsAttack) return;
         if (Mouse.current.leftButton.wasPressedThisFrame) Attack();
     }
 
