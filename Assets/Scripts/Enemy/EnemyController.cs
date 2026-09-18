@@ -161,6 +161,7 @@ public class EnemyController : MonoBehaviour
         attackCoolTimer = enemyData.AttackCoolTime;
 
         Stop();
+        animator.ResetTrigger("Attack");
         animator.SetTrigger("Hit");
         state = EnemyState.Trace;
     }
@@ -172,6 +173,7 @@ public class EnemyController : MonoBehaviour
         isAttack = false;
         Stop();
 
+        animator.ResetTrigger("Attack");
         animator.SetBool("Idle", false);
         animator.SetBool("Walk", false);
         animator.SetBool("Die", true);
