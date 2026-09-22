@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyStatus : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class EnemyStatus : MonoBehaviour
 
     public int CurrentHp => currentHp;
     public int MaxHp => enemyData.MaxHp;
+
+    public event Action<EnemyStatus> OnDead;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class EnemyStatus : MonoBehaviour
         if (currentHp <= 0)
         {
             controller.Die();
+            OnDead?.Invoke(this);
             return;
         }
         controller.Hit();
