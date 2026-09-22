@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -18,12 +19,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashCoolTime = 0.5f;
     [SerializeField] private float ghostSpawnInterval = 0.06f;
     
-    [Header("레퍼런스")]//레퍼런스 말고 사람이 쓴 것 같은 다른 건 없나?
+    [Header("레퍼런스")]
     [SerializeField] private Transform character;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer bodyRenderer;
 
     private Rigidbody2D rb;
+    private Collider2D playerCollider;
     private Camera mainCam;
 
     private PlayerStatus status;
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private float characterScaleX;
 
     private bool isGround;
+    private bool isDropPlatform;
     private int jumpCount;
     
     private float dashTimer;
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
         mainCam = Camera.main;
         status = GetComponent<PlayerStatus>();
         combat = GetComponent<PlayerCombat>();
@@ -76,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
         MoveInput();
         CheckGround();
+        if (DropPlatform()) return;
         Dash();
         if (IsDash) return;
         Jump();
@@ -129,10 +134,48 @@ public class PlayerController : MonoBehaviour
     }
     private void CheckGround()
     {
+        if (isDropPlatform)
+        {
+            isGround = false;
+            return;
+        }
         isGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
         //착지한 경우에만 점프 횟수 초기화
         if (isGround && rb.linearVelocity.y <= 0.0f) jumpCount = 0;
     }
+    private bool DropPlatform()
+    {
+        if (isDropPlatform) return false;
+        if (!Keyboard.current.sKey.wasPressedThisFrame) return false;
+
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(groundCheck.position, groundRadius, Vector2.down, groundRadius, groundLayer);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider == null) continue;
+            PlatformEffector2D effector = hit.collider.GetComponentInParent<PlatformEffector2D>();
+            if (effector == null) continue;
+            StartCoroutine(DropPlatformCoroutine(hit.collider, hit.point.y));
+            return true;
+        }
+        
+        return false;
+    }
+    private IEnumerator DropPlatformCoroutine(Collider2D platform, float platformY)
+    {
+        isDropPlatform = true;
+        isGround = false;
+
+        currentAnim = "";
+        PlayAnimation(JumpAnim);
+        Physics2D.IgnoreCollision(playerCollider, platform, true);
+        yield return new WaitForFixedUpdate();
+
+        while (platform != null && playerCollider.bounds.max.y > platformY) yield return new WaitForFixedUpdate();
+        if (platform != null) Physics2D.IgnoreCollision(playerCollider, platform, false);
+        
+        isDropPlatform = false;
+    }
+    
     private void Dash()
     {
         if (!Keyboard.current.leftShiftKey.wasPressedThisFrame) return;
