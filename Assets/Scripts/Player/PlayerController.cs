@@ -154,6 +154,8 @@ public class PlayerController : MonoBehaviour
             if (hit.collider == null) continue;
             PlatformEffector2D effector = hit.collider.GetComponentInParent<PlatformEffector2D>();
             if (effector == null) continue;
+            //공격 중 Platform을 내려가면 공격을 취소
+            if (combat.IsAttack) combat.CancelAttack();
             StartCoroutine(DropPlatformCoroutine(hit.collider, hit.point.y));
             return true;
         }
@@ -165,8 +167,6 @@ public class PlayerController : MonoBehaviour
         isDropPlatform = true;
         isGround = false;
 
-        currentAnim = "";
-        PlayAnimation(JumpAnim);
         Physics2D.IgnoreCollision(playerCollider, platform, true);
         yield return new WaitForFixedUpdate();
 
