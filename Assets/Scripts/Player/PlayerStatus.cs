@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
@@ -17,6 +18,8 @@ public class PlayerStatus : MonoBehaviour
 
     public bool IsHit {  get; private set; }
     public bool IsDead {  get; private set; }
+
+    public event Action OnDead;
 
 
     private void Awake()
@@ -61,6 +64,7 @@ public class PlayerStatus : MonoBehaviour
         animator.SetTrigger("Death");
         //확인용
         Debug.Log("Player Dead");
+        OnDead?.Invoke();
     }
 
 

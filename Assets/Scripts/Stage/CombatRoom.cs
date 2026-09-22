@@ -7,11 +7,19 @@ public class CombatRoom : MonoBehaviour
     [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private RoomBackground roomBackground;
 
+    [Header("보상")]
+    [SerializeField] private Transform rewardSpawnPoint;
+    [SerializeField] private GameObject artifactChestPrefab;
+
+    [Header("출구")]
+    [SerializeField] private GameObject exitPoint;
+
     [Header("카메라 경계")]
     [SerializeField] private BoxCollider2D leftWall;
     [SerializeField] private BoxCollider2D rightWall;
 
     private bool isClear;
+    private GameObject currentChest;
 
     public Transform PlayerSpawnPoint => playerSpawnPoint;
     public bool IsClear => isClear;
@@ -32,6 +40,12 @@ public class CombatRoom : MonoBehaviour
     public void EnterRoom()
     {
         isClear = false;
+        exitPoint.SetActive(false);
+        if (currentChest != null)
+        {
+            Destroy(currentChest);
+            currentChest = null;
+        }
         roomBackground.Activate();
         enemySpawner.SpawnEnemies();
         //확인용
@@ -45,10 +59,22 @@ public class CombatRoom : MonoBehaviour
     {
         if (isClear) return;
         isClear = true;
+        SpawnReward();
         //확인용
         Debug.Log($"{name} Clear");
-
-        //후에 할 작업
-        //맵 중앙에 아티팩트 생성
+    }
+    private void SpawnReward()
+    {
+        currentChest = Instantiate(artifactChestPrefab, rewardSpawnPoint.position, Quaternion.identity, transform);
+        ArtifactChest chest = currentChest.GetComponent<ArtifactChest>();
+        chest.SetRoom(this);
+    }
+    public void RewardTaken()
+    {
+        if (!isClear) return;
+        currentChest = null;
+        exitPoint.SetActive(true);
+        //확인용
+        Debug.Log($"{name} 보상 획득");
     }
 }
