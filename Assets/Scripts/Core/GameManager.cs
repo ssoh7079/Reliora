@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -22,6 +23,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         CurrentRun = new RunData();
+    }
+    private void Update()
+    {
+        if (Keyboard.current == null) return;
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) Application.Quit();
     }
 
     public void EnterDungeon()
