@@ -11,12 +11,14 @@ public class StageController : MonoBehaviour
 
     [Header("특수방")]
     [SerializeField] private RewardRoom rewardRoom;
+    [SerializeField] private HealRoom healRoom;
 
     [Header("UI")]
     [SerializeField] private ResultUI resultUI;
 
     private CombatRoom currentBattleRoom;
     private RewardRoom currentRewardRoom;
+    private HealRoom currentHealRoom;
 
     private CombatRoom lastBattleRoom;
 
@@ -61,8 +63,9 @@ public class StageController : MonoBehaviour
                 EnterBattleRoom();
                 break;
             case 5:
-                //확인용
-                //Debug.Log("Battle 4회 완료 - 다음은 HealRoom");
+                EnterHealRoom();
+                break;
+            case 6:
                 StageClear();
                 break;
         }
@@ -92,6 +95,13 @@ public class StageController : MonoBehaviour
         MovePlayer(rewardRoom.PlayerSpawnPoint, rewardRoom.LeftWall, rewardRoom.RightWall);
         rewardRoom.EnterRoom();
     }
+    private void EnterHealRoom()
+    {
+        ExitCurrentRoom();
+        currentHealRoom = healRoom;
+        MovePlayer(healRoom.PlayerSpawnPoint, healRoom.LeftWall, healRoom.RightWall);
+        healRoom.EnterRoom();
+    }
     private void MovePlayer(Transform spawnPoint, BoxCollider2D leftWall, BoxCollider2D rightWall)
     {
         Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
@@ -111,6 +121,11 @@ public class StageController : MonoBehaviour
         {
             currentRewardRoom.ExitRoom();
             currentRewardRoom = null;
+        }
+        if (currentHealRoom != null)
+        {
+            currentHealRoom.ExitRoom();
+            currentHealRoom = null;
         }
     }
 
