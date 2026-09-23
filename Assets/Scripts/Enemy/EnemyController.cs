@@ -106,7 +106,7 @@ public class EnemyController : MonoBehaviour
         }
 
         SetMoveAnimation(true);
-        
+
         float moveDistance = Mathf.Abs(transform.position.x - startX);
         if (moveDistance >= enemyData.PatrolDistance)
         {
@@ -205,8 +205,13 @@ public class EnemyController : MonoBehaviour
     {
         if (state == EnemyState.Dead) return;
 
+        bool wasAttack = isAttack;
         isAttack = false;
-        attackCoolTimer = enemyData.AttackCoolTime;
+        //공격 도중 끊긴 경우에만 쿨타임 시작
+        if (wasAttack)
+        {
+            attackCoolTimer = enemyData.AttackCoolTime;
+        }
 
         Stop();
         animator.ResetTrigger("Attack");
