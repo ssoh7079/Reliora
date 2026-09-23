@@ -85,3 +85,7 @@ crashlytics-build.properties
 # PixelFantasy
 /Assets/PixelFantasy/
 /Assets/PixelFantasy.meta
+
+# Fonts
+/Assets/Fonts/
+/Assets/Fonts.meta
