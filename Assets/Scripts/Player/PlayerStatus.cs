@@ -66,6 +66,17 @@ public class PlayerStatus : MonoBehaviour
         Debug.Log("Player Dead");
         OnDead?.Invoke();
     }
+    public void Heal(int amount)
+    {
+        if (IsDead) return;
+        if (amount <= 0) return;
+
+        hp += amount;
+        hp = Mathf.Min(hp, maxHp);
+
+        //확인용
+        Debug.Log($"Player Heal : {hp} / {maxHp}");
+    }
 
 
     //테스트용
