@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     public int FacingDir => character.localScale.x >= 0.0f ? 1 : -1;
     public bool IsDash { get; private set; }
+    public bool IsControlLocked { get; private set; }
 
 
     private void Awake()
@@ -77,6 +78,12 @@ public class PlayerController : MonoBehaviour
             DashUpdate();
             return;
         }
+        if (IsControlLocked)
+        {
+            moveX = 0.0f;
+            CancelDash();
+            return;
+        }
 
         MoveInput();
         CheckGround();
@@ -101,6 +108,11 @@ public class PlayerController : MonoBehaviour
         if (IsDash)
         {
             rb.linearVelocity = new Vector2(dashDir * dashSpeed, 0.0f);
+            return;
+        }
+        if (IsControlLocked)
+        {
+            rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
             return;
         }
 
@@ -268,11 +280,29 @@ public class PlayerController : MonoBehaviour
         currentAnim = anim;
         animator.Play(anim);
     }
-
     public void ResetAnimation()
     {
         currentAnim = "";
     }
+    public void SetControlLock(bool isLocked)
+    {
+        IsControlLocked = isLocked;
+        moveX = 0.0f;
+        if (isLocked)
+        {
+            combat.CancelAttack();
+            CancelDash();
+            rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
+            animator.Play(IdleAnim, 0, 0.0f);
+            currentAnim = IdleAnim;
+        }
+        else
+        {
+            ResetAnimation();
+        }
+    }
+
+
 
     private void OnDrawGizmosSelected()
     {
