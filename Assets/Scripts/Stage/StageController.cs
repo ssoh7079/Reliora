@@ -12,6 +12,7 @@ public class StageController : MonoBehaviour
     [Header("특수방")]
     [SerializeField] private RewardRoom rewardRoom;
     [SerializeField] private HealRoom healRoom;
+    [SerializeField] private BossRoom bossRoom;
 
     [Header("UI")]
     [SerializeField] private ResultUI resultUI;
@@ -19,6 +20,7 @@ public class StageController : MonoBehaviour
     private CombatRoom currentBattleRoom;
     private RewardRoom currentRewardRoom;
     private HealRoom currentHealRoom;
+    private BossRoom currentBossRoom;
 
     private CombatRoom lastBattleRoom;
 
@@ -32,6 +34,7 @@ public class StageController : MonoBehaviour
     {
         playerStatus = player.GetComponent<PlayerStatus>();
         playerStatus.OnDead += PlayerDead;
+        if (bossRoom != null) bossRoom.OnBossClear += StageClear;
     }
     void Start()
     {
@@ -41,6 +44,7 @@ public class StageController : MonoBehaviour
     private void OnDestroy()
     {
         if (playerStatus != null) playerStatus.OnDead -= PlayerDead;
+        if (bossRoom != null) bossRoom.OnBossClear -= StageClear;
     }
 
     public void EnterNextRoom()
@@ -66,7 +70,7 @@ public class StageController : MonoBehaviour
                 EnterHealRoom();
                 break;
             case 6:
-                StageClear();
+                EnterBossRoom();
                 break;
         }
     }
@@ -102,6 +106,13 @@ public class StageController : MonoBehaviour
         MovePlayer(healRoom.PlayerSpawnPoint, healRoom.LeftWall, healRoom.RightWall);
         healRoom.EnterRoom();
     }
+    private void EnterBossRoom()
+    {
+        ExitCurrentRoom();
+        currentBossRoom = bossRoom;
+        MovePlayer(bossRoom.PlayerSpawnPoint, bossRoom.LeftWall, bossRoom.RightWall);
+        bossRoom.EnterRoom(player);
+    }
     private void MovePlayer(Transform spawnPoint, BoxCollider2D leftWall, BoxCollider2D rightWall)
     {
         Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
@@ -126,6 +137,11 @@ public class StageController : MonoBehaviour
         {
             currentHealRoom.ExitRoom();
             currentHealRoom = null;
+        }
+        if (currentBossRoom != null)
+        {
+            currentBossRoom.ExitRoom();
+            currentBossRoom = null;
         }
     }
 

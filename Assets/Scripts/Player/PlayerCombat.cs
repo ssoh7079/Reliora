@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     }
     void Update()
     {
-        if (status.IsDead || status.IsHit || controller.IsDash || IsAttack) return;
+        if (status.IsDead || status.IsHit || controller.IsControlLocked || controller.IsDash || IsAttack) return;
         if (Mouse.current.leftButton.wasPressedThisFrame) Attack();
     }
 
@@ -42,7 +42,14 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             EnemyStatus enemy = hit.GetComponentInParent<EnemyStatus>();
-            if (enemy != null) enemy.TakeDamage(attackDamage);
+            if (enemy != null)
+            {
+                enemy.TakeDamage(attackDamage);
+                continue;
+            }
+
+            BossStatus boss = hit.GetComponentInParent<BossStatus>();
+            if (boss != null) boss.TakeDamage(attackDamage);
         }
     }
     //AttackSlash 애니메이션 이벤트
@@ -60,7 +67,7 @@ public class PlayerCombat : MonoBehaviour
         animator.ResetTrigger("AttackSlash");
         controller.ResetAnimation();
     }
-    
+
 
 
     private void OnDrawGizmosSelected()

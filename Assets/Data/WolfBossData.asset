@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2b3a037a28738642adbb6fb49d1f7f4, type: 3}
+  m_Name: WolfBossData
+  m_EditorClassIdentifier: Assembly-CSharp::BossData
+  maxHp: 200
+  attackDamage: 15
+  moveSpeed: 3
+  patternRunSpeed: 7
+  attackSize: {x: 3.5, y: 2.5}
+  attackRange: 1.8
+  attackCoolTime: 1
+  readyTime: 0.6
+  patternCoolTime: 4
+  patternReadyTime: 1.2
+  vanishTime: 1.2
+  appearDistance: 1.5
