@@ -366,7 +366,6 @@ public class BossController : MonoBehaviour
         Stop();
 
         if (warningIcon != null) warningIcon.SetActive(false);
-        if (bossCollider != null) bossCollider.enabled = false;
 
         animator.ResetTrigger("Attack");
         animator.SetBool("Ready", false);
