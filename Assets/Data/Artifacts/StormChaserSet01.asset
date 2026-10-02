@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de362ce29c76c7c4b85ccbd90cb0e439, type: 3}
+  m_Name: StormChaserSet01
+  m_EditorClassIdentifier: Assembly-CSharp::ArtifactData
+  artifactName: "\uB1CC\uBA85\uC758 \uAC80"
+  icon: {fileID: 338288695738948052, guid: c133d091a7416754eb6d2faac14110fb, type: 3}
+  description: 
+  isUnique: 1
+  setType: 0
+  attackBonus: 2
+  defenseBonus: 0
+  maxHpBonus: 15
+  attackSpeedBonus: 0

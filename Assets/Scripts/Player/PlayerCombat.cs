@@ -1,30 +1,51 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerCombat : MonoBehaviour
 {
+    [Header("애니메이터")]
     [SerializeField] private Animator animator;
 
+    [Header("공격")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private int attackDamage = 10;
-    [SerializeField] private Vector2 attackSize = new Vector2(1.2f, 1.2f);
+    [SerializeField] private Vector2 attackSize = new Vector2(2.5f, 2.5f);
     [SerializeField] private LayerMask enemyLayer;
 
-    public bool IsAttack { get; private set; }
+    [Header("UI")]
+    [SerializeField] private ArtifactInventoryUI inventoryUI;
+
 
     private PlayerStatus status;
     private PlayerController controller;
+
+    private int artifactAttackBonus;
+    private float artifactAttackSpeedBonus;
+
+    public bool IsAttack { get; private set; }
+
+    public int AttackDamage => attackDamage + artifactAttackBonus;
+    public float AttackSpeed => Mathf.Max(0.1f, 1.0f + artifactAttackSpeedBonus);
 
 
     private void Awake()
     {
         status = GetComponent<PlayerStatus>();
         controller = GetComponent<PlayerController>();
+
+        UpdateAttackSpeed();
     }
     void Update()
     {
         if (status.IsDead || status.IsHit || controller.IsControlLocked || controller.IsDash || IsAttack) return;
-        if (Mouse.current.leftButton.wasPressedThisFrame) Attack();
+        if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
+        //인벤토리 관련 입력이 일반 공격으로 전달되지 않게
+        if (inventoryUI != null && inventoryUI.BlocksAttack) return;
+        //버튼, 슬롯 등 UI를 클릭했을 때 공격 방지
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+        Attack();
     }
 
     private void Attack()
@@ -66,6 +87,18 @@ public class PlayerCombat : MonoBehaviour
         IsAttack = false;
         animator.ResetTrigger("AttackSlash");
         controller.ResetAnimation();
+    }
+    public void SetArtifactStats(int attackBonus, float attackSpeedBonus)
+    {
+        artifactAttackBonus = Mathf.Max(attackBonus, 0);
+        artifactAttackSpeedBonus = Mathf.Max(attackSpeedBonus, 0.0f);
+        UpdateAttackSpeed();
+        //확인용
+        Debug.Log($"Artifact Combat : ATK {AttackDamage}, AttackSpeed {AttackSpeed:F2}");
+    }
+    private void UpdateAttackSpeed()
+    {
+        animator.SetFloat("AttackAnimSpeed", AttackSpeed);
     }
 
 

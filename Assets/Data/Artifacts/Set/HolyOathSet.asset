@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef9024c35ef6144392cdd9fc87eb83d, type: 3}
+  m_Name: HolyOathSet
+  m_EditorClassIdentifier: Assembly-CSharp::ArtifactSetData
+  setType: 1
+  setName: "\uC131\uC804\uC758 \uB9F9\uC138"
+  firstArtifact: {fileID: 11400000, guid: a8fd24bdfb77a854bb7f375d62788ec5, type: 2}
+  secondArtifact: {fileID: 11400000, guid: 731b051992317454c885833d840cb701, type: 2}
+  skillType: 1
+  skillName: "\uC2EC\uD310\uC758 \uCCA0\uD1F4"
+  skillIcon: {fileID: 7716993177664335000, guid: ea66c0748fa256446b07fe3b76834ed6, type: 3}
+  skillDescription: "\uB2E8\uC77C \uB300\uC0C1 "
+  skillDamage: 25
+  skillCoolTime: 8
