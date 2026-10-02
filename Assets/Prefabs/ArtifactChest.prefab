@@ -151,3 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5ea76abb93c76248bfceea3110febe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArtifactChest
+  rewardPool:
+  - {fileID: 11400000, guid: a8fd24bdfb77a854bb7f375d62788ec5, type: 2}
+  - {fileID: 11400000, guid: 731b051992317454c885833d840cb701, type: 2}
+  - {fileID: 11400000, guid: 379d0f185f172684bbda1fae0106dae7, type: 2}
+  - {fileID: 11400000, guid: 787c7ab2646d7eb44a6f8ea3d2918394, type: 2}
+  - {fileID: 11400000, guid: 2030e914a92156d4f9597eac782dec2e, type: 2}
+  - {fileID: 11400000, guid: bc8a4c9399f232949a28579c40269790, type: 2}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de362ce29c76c7c4b85ccbd90cb0e439, type: 3}
+  m_Name: ThunderTraceSet02
+  m_EditorClassIdentifier: Assembly-CSharp::ArtifactData
+  artifactName: "\uB1CC\uC804\uC758 \uAE43"
+  icon: {fileID: 2066173125814701114, guid: 8983b1213399721468a5140b38013047, type: 3}
+  description: 
+  isUnique: 1
+  setType: 2
+  attackBonus: 0
+  defenseBonus: 0
+  maxHpBonus: 0
+  attackSpeedBonus: 0.2

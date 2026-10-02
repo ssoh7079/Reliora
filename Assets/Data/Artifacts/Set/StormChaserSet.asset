@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef9024c35ef6144392cdd9fc87eb83d, type: 3}
+  m_Name: StormChaserSet
+  m_EditorClassIdentifier: Assembly-CSharp::ArtifactSetData
+  setType: 0
+  setName: "\uD3ED\uD48D\uCD94\uC801\uC790"
+  firstArtifact: {fileID: 11400000, guid: 379d0f185f172684bbda1fae0106dae7, type: 2}
+  secondArtifact: {fileID: 11400000, guid: 787c7ab2646d7eb44a6f8ea3d2918394, type: 2}
+  skillType: 0
+  skillName: "\uB099\uB8B0"
+  skillIcon: {fileID: 1826647100403922585, guid: c5861eba6f2b6d04da370c68fa3201ca, type: 3}
+  skillDescription: "\uACF5\uACA9 \uB300\uC0C1 \uCD5C\uB300 3"
+  skillDamage: 8
+  skillCoolTime: 5
