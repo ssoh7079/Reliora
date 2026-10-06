@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerStatus status;
     private PlayerCombat combat;
+    private ArtifactSkillController skillController;
 
     private float moveX;
     private float characterScaleX;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
         mainCam = Camera.main;
         status = GetComponent<PlayerStatus>();
         combat = GetComponent<PlayerCombat>();
+        skillController = GetComponent<ArtifactSkillController>();
 
         characterScaleX = Mathf.Abs(character.localScale.x);
     }
@@ -68,6 +70,12 @@ public class PlayerController : MonoBehaviour
     {
         if (dashCoolTimer > 0.0f) dashCoolTimer -= Time.deltaTime;
         if (status.IsDead || status.IsHit)
+        {
+            moveX = 0.0f;
+            CancelDash();
+            return;
+        }
+        if (skillController != null && skillController.IsLineCasting)
         {
             moveX = 0.0f;
             CancelDash();
@@ -101,6 +109,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (status.IsDead)
+        {
+            rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
+            return;
+        }
+        if (skillController != null && skillController.IsLineCasting)
         {
             rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
             return;
