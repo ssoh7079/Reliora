@@ -19,6 +19,7 @@ public class PlayerCombat : MonoBehaviour
 
     private PlayerStatus status;
     private PlayerController controller;
+    private ArtifactSkillController skillController;
 
     private int artifactAttackBonus;
     private float artifactAttackSpeedBonus;
@@ -33,12 +34,16 @@ public class PlayerCombat : MonoBehaviour
     {
         status = GetComponent<PlayerStatus>();
         controller = GetComponent<PlayerController>();
+        skillController = GetComponent<ArtifactSkillController>();
 
         UpdateAttackSpeed();
     }
     void Update()
     {
-        if (status.IsDead || status.IsHit || controller.IsControlLocked || controller.IsDash || IsAttack) return;
+        if (status.IsDead || status.IsHit || 
+            controller.IsControlLocked || controller.IsDash || 
+            IsAttack || (skillController != null && skillController.IsLineCasting)) return;
+        
         if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
         //인벤토리 관련 입력이 일반 공격으로 전달되지 않게
         if (inventoryUI != null && inventoryUI.BlocksAttack) return;
