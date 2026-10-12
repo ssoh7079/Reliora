@@ -26,7 +26,7 @@ public class ArtifactSkillBarUI : MonoBehaviour
         for (int i = 0; i < slots.Count; i++)
         {
             ArtifactSetData skill = skillController.ActiveSkills[i];
-            slots[i].RefreshCooldown(skillController.GetRemainCoolTime(i), skill.SkillCoolTime);
+            slots[i].RefreshCooldown(skillController.GetRemainCoolTime(i), skillController.GetSkillCoolTime(skill));
         }
     }
 

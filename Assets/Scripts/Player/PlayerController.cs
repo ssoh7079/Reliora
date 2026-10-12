@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("대시")]
     [SerializeField] private float dashSpeed = 15.0f;
     [SerializeField] private float dashDuration = 0.3f;
-    [SerializeField] private float dashCoolTime = 0.5f;
+    [SerializeField] private float dashCoolTime = 0.8f;
     [SerializeField] private float ghostSpawnInterval = 0.06f;
     
     [Header("레퍼런스")]
@@ -53,6 +53,19 @@ public class PlayerController : MonoBehaviour
     public int FacingDir => character.localScale.x >= 0.0f ? 1 : -1;
     public bool IsDash { get; private set; }
     public bool IsControlLocked { get; private set; }
+
+    private float DashCoolTime
+    {
+        get
+        {
+            float reduction = 0.0f;
+            if (GameManager.Instance != null && GameManager.Instance.MetaProgress != null)
+            {
+                reduction = GameManager.Instance.MetaProgress.DashCoolReduction;
+            }
+            return Mathf.Max(0.1f, dashCoolTime - reduction);
+        }
+    }
 
 
     private void Awake()
@@ -237,7 +250,7 @@ public class PlayerController : MonoBehaviour
 
         IsDash = false;
         dashTimer = 0.0f;
-        dashCoolTimer = dashCoolTime;
+        dashCoolTimer = DashCoolTime;
         rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
         ResetAnimation();
     }
@@ -247,7 +260,7 @@ public class PlayerController : MonoBehaviour
 
         IsDash = false;
         dashTimer = 0.0f;
-        dashCoolTimer = dashCoolTime;
+        dashCoolTimer = DashCoolTime;
         rb.linearVelocity = new Vector2(0.0f, rb.linearVelocity.y);
         ResetAnimation();
     }
@@ -292,6 +305,12 @@ public class PlayerController : MonoBehaviour
 
         currentAnim = anim;
         animator.Play(anim);
+    }
+    public void SetIdle()
+    {
+        moveX = 0.0f;
+        animator.Play(IdleAnim, 0, 0.0f);
+        currentAnim = IdleAnim;
     }
     public void ResetAnimation()
     {

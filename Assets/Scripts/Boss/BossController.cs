@@ -153,6 +153,20 @@ public class BossController : MonoBehaviour
         if (player == null) return;
 
         Flip();
+        //평타를 못 치고 계속 추적 중이어도 패턴 쿨타임이 끝나면 바로 패턴 사용
+        if (patternCoolTimer <= 0.0f)
+        {
+            int pattern = Random.Range(0, 2);
+            if (pattern == 0)
+            {
+                EnterPattern1();
+            }
+            else
+            {
+                EnterPattern2();
+            }
+            return;
+        }
 
         float distance = Mathf.Abs(player.position.x - transform.position.x);
         if (distance > bossData.AttackRange) return;
@@ -374,6 +388,7 @@ public class BossController : MonoBehaviour
     }
     public void DieEnd()
     {
+        if (GameManager.Instance != null) GameManager.Instance.FinishRun(true);
         BossRoom bossRoom = GetComponentInParent<BossRoom>();
         if (bossRoom != null) bossRoom.BossDead();
 
