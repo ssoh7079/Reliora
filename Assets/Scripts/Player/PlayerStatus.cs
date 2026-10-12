@@ -14,29 +14,76 @@ public class PlayerStatus : MonoBehaviour
 
     private PlayerController controller;
     private PlayerCombat combat;
+    private MetaProgressData metaProgress;
 
     private int hp;
+    private int previousMaxHp;
 
     private int artifactDefenseBonus;
     private int artifactMaxHpBonus;
 
     public int Hp => hp;
-    public int MaxHp => maxHp + artifactMaxHpBonus;
-    public int Defense => defense + artifactDefenseBonus;
+    public int MaxHp => maxHp + MetaMaxHpBonus + artifactMaxHpBonus;
+    public int Defense => defense + MetaDefenseBonus + artifactDefenseBonus;
 
     public bool IsHit {  get; private set; }
     public bool IsDead {  get; private set; }
 
     public event Action OnDead;
 
+    private int MetaMaxHpBonus
+    {
+        get
+        {
+            if (GameManager.Instance == null || GameManager.Instance.MetaProgress == null) return 0;
+            return GameManager.Instance.MetaProgress.MaxHpBonus;
+        }
+    }
+    private int MetaDefenseBonus
+    {
+        get
+        {
+            if (GameManager.Instance == null || GameManager.Instance.MetaProgress == null) return 0;
+            return GameManager.Instance.MetaProgress.DefenseBonus;
+        }
+    }
+
 
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
         combat = GetComponent<PlayerCombat>();
-        hp = maxHp;
+        hp = MaxHp;
+        previousMaxHp = MaxHp;
+    }
+    private void Start()
+    {
+        if (GameManager.Instance == null) return;
+
+        metaProgress = GameManager.Instance.MetaProgress;
+        if (metaProgress == null) return;
+
+        metaProgress.OnChanged += RefreshMetaStats;
+        RefreshMetaStats();
+    }
+    private void OnDestroy()
+    {
+        if (metaProgress != null)
+        {
+            metaProgress.OnChanged -= RefreshMetaStats;
+        }
     }
 
+    private void RefreshMetaStats()
+    {
+        int newMaxHp = MaxHp;
+        int difference = newMaxHp - previousMaxHp;
+        //최대 체력이 증가하면 현재 체력도 증가량만큼 같이 올림
+        if (difference > 0) hp += difference;
+        //최대 체력이 내려갔을 경우 초과 체력 방지
+        hp = Mathf.Min(hp, newMaxHp);
+        previousMaxHp = newMaxHp;
+    }
     public void TakeDamage(int damage)
     {
         if (IsDead || IsHit) return;
@@ -73,6 +120,7 @@ public class PlayerStatus : MonoBehaviour
         animator.SetTrigger("Death");
         //확인용
         Debug.Log("Player Dead");
+        if (GameManager.Instance != null) GameManager.Instance.FinishRun(false);
         OnDead?.Invoke();
     }
     public void Heal(int amount)

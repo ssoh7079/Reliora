@@ -132,7 +132,7 @@ public class ArtifactSkillController : MonoBehaviour
 
         if (!used) return false;
 
-        coolTimes[skill] = Time.time + skill.SkillCoolTime;
+        coolTimes[skill] = Time.time + GetSkillCoolTime(skill);
         return true;
     }
     private bool UseLightning(ArtifactSetData skill)
@@ -456,6 +456,17 @@ public class ArtifactSkillController : MonoBehaviour
         }
 
         return Mathf.Max(0.0f, endTime - Time.time);
+    }
+    public float GetSkillCoolTime(ArtifactSetData skill)
+    {
+        if (skill == null) return 0.0f;
+
+        float multiplier = 1.0f;
+        if (GameManager.Instance != null && GameManager.Instance.MetaProgress != null)
+        {
+            multiplier = GameManager.Instance.MetaProgress.SkillCoolMultiplier;
+        }
+        return skill.SkillCoolTime * multiplier;
     }
 
 

@@ -5,6 +5,8 @@ public class HealObject : MonoBehaviour
 {
     [SerializeField] private float healRate = 0.6f;
 
+    [SerializeField] private GameObject interactionPrompt;
+
     private HealRoom healRoom;
     private PlayerStatus playerStatus;
 
@@ -15,10 +17,12 @@ public class HealObject : MonoBehaviour
     private void Awake()
     {
         healRoom = GetComponentInParent<HealRoom>();
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
     void Update()
     {
         if (!isPlayerInside || isUsed) return;
+        if (Keyboard.current == null) return;
         if (Keyboard.current.fKey.wasPressedThisFrame) Heal();
     }
 
@@ -29,6 +33,7 @@ public class HealObject : MonoBehaviour
         isUsed = true;
         int healAmount = Mathf.RoundToInt(playerStatus.MaxHp * healRate);
         playerStatus.Heal(healAmount);
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
         healRoom.HealComplete();
         gameObject.SetActive(false);
     }
@@ -38,6 +43,7 @@ public class HealObject : MonoBehaviour
         if (status == null) return;
         playerStatus = status;
         isPlayerInside = true;
+        if (interactionPrompt != null) interactionPrompt.SetActive(true);
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -46,5 +52,6 @@ public class HealObject : MonoBehaviour
         if (status != playerStatus) return;
         playerStatus = null;
         isPlayerInside = false;
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
 }

@@ -59,6 +59,16 @@ public class CombatRoom : MonoBehaviour
     {
         if (isClear) return;
         isClear = true;
+        //이번 런 전투방 클리어 기록
+        if (GameManager.Instance != null && GameManager.Instance.CurrentRun != null)
+        {
+            GameManager.Instance.CurrentRun.AddCombatRoomClear();
+            //확인용
+            Debug.Log(
+                $"Run Room Clear : " +
+                $"{GameManager.Instance.CurrentRun.CombatRoomClearCount} / " +
+                $"Reward : {GameManager.Instance.CurrentRun.EarnedCurrency}");
+        }
         SpawnReward();
         //확인용
         Debug.Log($"{name} Clear");

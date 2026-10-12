@@ -25,8 +25,16 @@ public class PlayerCombat : MonoBehaviour
     private float artifactAttackSpeedBonus;
 
     public bool IsAttack { get; private set; }
+    private int MetaAttackBonus
+    {
+        get
+        {
+            if (GameManager.Instance == null || GameManager.Instance.MetaProgress == null) return 0;
+            return GameManager.Instance.MetaProgress.AttackBonus;
+        }
+    }
 
-    public int AttackDamage => attackDamage + artifactAttackBonus;
+    public int AttackDamage => attackDamage + MetaAttackBonus + artifactAttackBonus;
     public float AttackSpeed => Mathf.Max(0.1f, 1.0f + artifactAttackSpeedBonus);
 
 
@@ -70,12 +78,12 @@ public class PlayerCombat : MonoBehaviour
             EnemyStatus enemy = hit.GetComponentInParent<EnemyStatus>();
             if (enemy != null)
             {
-                enemy.TakeDamage(attackDamage);
+                enemy.TakeDamage(AttackDamage);
                 continue;
             }
 
             BossStatus boss = hit.GetComponentInParent<BossStatus>();
-            if (boss != null) boss.TakeDamage(attackDamage);
+            if (boss != null) boss.TakeDamage(AttackDamage);
         }
     }
     //AttackSlash 애니메이션 이벤트

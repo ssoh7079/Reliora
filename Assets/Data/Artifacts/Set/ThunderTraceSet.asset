@@ -18,7 +18,7 @@ MonoBehaviour:
   secondArtifact: {fileID: 11400000, guid: bc8a4c9399f232949a28579c40269790, type: 2}
   skillType: 2
   skillName: "\uB77C\uC774\uD2B8\uB2DD\uBE54"
-  skillIcon: {fileID: 1978446432087837930, guid: f7da128b8f007324ba1341460e219def, type: 3}
+  skillIcon: {fileID: -400130723843321065, guid: a2f314fa7431ba34e81aff545854679e, type: 3}
   skillDescription: "\uACF5\uACA9 \uB300\uC0C1 \uCD5C\uB300 3"
   skillDamage: 12
   skillCoolTime: 6

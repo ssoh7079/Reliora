@@ -7,6 +7,9 @@ public class ArtifactChest : MonoBehaviour
     [Header("보상 목록")]
     [SerializeField] private ArtifactData[] rewardPool;
 
+    [Header("상호작용")]
+    [SerializeField] private GameObject interactionPrompt;
+
     private CombatRoom combatRoom;
     private RewardRoom rewardRoom;
 
@@ -19,6 +22,7 @@ public class ArtifactChest : MonoBehaviour
     private void Awake()
     {
         rewardRoom = GetComponentInParent<RewardRoom>();
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
     public void SetRoom(CombatRoom room)
     {
@@ -28,6 +32,7 @@ public class ArtifactChest : MonoBehaviour
     void Update()
     {
         if (!isPlayerInside || isTaken) return;
+        if (Keyboard.current == null) return;
         if (Keyboard.current.fKey.wasPressedThisFrame) TakeReward();
     }
 
@@ -68,6 +73,10 @@ public class ArtifactChest : MonoBehaviour
     {
         isTaken = true;
 
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(false);
+        }
         if (combatRoom != null)
         {
             combatRoom.RewardTaken();
@@ -86,6 +95,8 @@ public class ArtifactChest : MonoBehaviour
         
         inventory = playerInventory;
         isPlayerInside = true;
+
+        if (interactionPrompt != null) interactionPrompt.SetActive(true);
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -94,5 +105,7 @@ public class ArtifactChest : MonoBehaviour
 
         inventory = null;
         isPlayerInside = false;
+
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
 }
