@@ -16,6 +16,9 @@ public class BossRoom : MonoBehaviour
     [Header("보스")]
     [SerializeField] private BossController bossPrefab;
 
+    [Header("BGM")]
+    [SerializeField] private StageBGM stageBGM;
+
     [Header("인트로")]
     [SerializeField] private GameObject bossIntroText;
     [SerializeField] private float introTime = 2.0f;
@@ -38,6 +41,7 @@ public class BossRoom : MonoBehaviour
     public void EnterRoom(PlayerController targetPlayer)
     {
         player = targetPlayer;
+        if (stageBGM != null) stageBGM.PlayBossBGM();
         roomBackground.Activate();
         SpawnBoss();
         StartCoroutine(BossIntro());
