@@ -16,6 +16,10 @@ public class PlayerCombat : MonoBehaviour
     [Header("UI")]
     [SerializeField] private ArtifactInventoryUI inventoryUI;
 
+    [Header("사운드")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackSFX;
+
 
     private PlayerStatus status;
     private PlayerController controller;
@@ -70,6 +74,7 @@ public class PlayerCombat : MonoBehaviour
     public void AttackHit()
     {
         if (!IsAttack) return;
+        if (audioSource != null && attackSFX != null) audioSource.PlayOneShot(attackSFX);
 
         Vector2 center = (Vector2)attackPoint.position + Vector2.right * controller.FacingDir * (attackSize.x * 0.5f);
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, attackSize, 0.0f, enemyLayer);

@@ -5,6 +5,10 @@ public class EnemyStatus : MonoBehaviour
 {
     [SerializeField] private EnemyData enemyData;
 
+    [Header("사운드")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitSFX;
+
     private int currentHp;
     private EnemyController controller;
 
@@ -25,6 +29,11 @@ public class EnemyStatus : MonoBehaviour
 
         currentHp -= damage;
         currentHp = Mathf.Max(currentHp, 0);
+
+        if (audioSource != null && hitSFX != null)
+        {
+            audioSource.PlayOneShot(hitSFX);
+        }
 
         //확인용
         Debug.Log($"Enemy HP : {currentHp} / {enemyData.MaxHp}");
