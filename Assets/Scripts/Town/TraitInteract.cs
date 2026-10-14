@@ -6,7 +6,11 @@ public class TraitInteract : MonoBehaviour
     [SerializeField] private GameObject prompt;
     [SerializeField] private TraitUI traitUI;
 
+    [Header("사운드")]
+    [SerializeField] private AudioClip interactionSFX;
+
     private PlayerController player;
+    private AudioSource playerAudioSource;
 
     private void Awake()
     {
@@ -19,6 +23,8 @@ public class TraitInteract : MonoBehaviour
         if (Keyboard.current == null) return;
         if (!Keyboard.current.fKey.wasPressedThisFrame) return;
 
+        PlayInteractionSFX();
+
         if (traitUI.IsOpen)
         {
             traitUI.Close();
@@ -29,6 +35,11 @@ public class TraitInteract : MonoBehaviour
         }
     }
 
+    private void PlayInteractionSFX()
+    {
+        if (playerAudioSource == null || interactionSFX == null) return;
+        playerAudioSource.PlayOneShot(interactionSFX);
+    }
     private void UpdatePrompt()
     {
         if (prompt == null) return;
@@ -43,6 +54,7 @@ public class TraitInteract : MonoBehaviour
         if (target == null) return;
 
         player = target;
+        playerAudioSource = target.GetComponent<AudioSource>();
         UpdatePrompt();
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -51,6 +63,7 @@ public class TraitInteract : MonoBehaviour
         if (target == null || target != player) return;
 
         player = null;
+        playerAudioSource = null;
         UpdatePrompt();
     }
 }

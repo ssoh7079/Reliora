@@ -10,10 +10,14 @@ public class ArtifactChest : MonoBehaviour
     [Header("상호작용")]
     [SerializeField] private GameObject interactionPrompt;
 
+    [Header("사운드")]
+    [SerializeField] private AudioClip interactionSFX;
+
     private CombatRoom combatRoom;
     private RewardRoom rewardRoom;
 
     private ArtifactInventory inventory;
+    private AudioSource playerAudioSource;
 
     private bool isPlayerInside;
     private bool isTaken;
@@ -44,12 +48,18 @@ public class ArtifactChest : MonoBehaviour
         //이미 6개를 전부 가지고 있다면, 방 진행만 가능하게 처리
         if (artifact == null)
         {
+            PlayInteractionSFX();
             CompleteReward();
             return;
         }
         if (!inventory.AddArtifact(artifact)) return;
-
+        PlayInteractionSFX();
         CompleteReward();
+    }
+    private void PlayInteractionSFX()
+    {
+        if (playerAudioSource == null || interactionSFX == null) return;
+        playerAudioSource.PlayOneShot(interactionSFX);
     }
     private ArtifactData GetRandomArtifact()
     {
@@ -94,6 +104,7 @@ public class ArtifactChest : MonoBehaviour
         if (playerInventory == null) return;
         
         inventory = playerInventory;
+        playerAudioSource = playerInventory.GetComponent<AudioSource>();
         isPlayerInside = true;
 
         if (interactionPrompt != null) interactionPrompt.SetActive(true);
@@ -104,6 +115,7 @@ public class ArtifactChest : MonoBehaviour
         if (playerInventory == null || playerInventory != inventory) return;
 
         inventory = null;
+        playerAudioSource = null;
         isPlayerInside = false;
 
         if (interactionPrompt != null) interactionPrompt.SetActive(false);

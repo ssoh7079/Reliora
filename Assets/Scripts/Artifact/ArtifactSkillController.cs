@@ -30,6 +30,12 @@ public class ArtifactSkillController : MonoBehaviour
     [SerializeField] private float hammerVfxSpeed = 2.0f;
     [SerializeField] private float lineVfxSpeed = 1.0f;
 
+    [Header("사운드")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip lightningSFX;
+    [SerializeField] private AudioClip hammerSFX;
+    [SerializeField] private AudioClip electricLineSFX;
+
     private const int MaxSkillCount = 3;
 
     private ArtifactInventory inventory;
@@ -141,6 +147,10 @@ public class ArtifactSkillController : MonoBehaviour
 
         List<Component> targets = GetRangeTargets();
         if (targets.Count == 0) return false;
+        if (audioSource != null && lightningSFX != null)
+        {
+            audioSource.PlayOneShot(lightningSFX);
+        }
 
         //랜덤으로 섞기
         for (int i = targets.Count - 1; i > 0; i--)
@@ -164,6 +174,10 @@ public class ArtifactSkillController : MonoBehaviour
 
         List<Component> targets = GetRangeTargets();
         if (targets.Count == 0) return false;
+        if (audioSource != null && hammerSFX != null)
+        {
+            audioSource.PlayOneShot(hammerSFX);
+        }
 
         Component nearest = null;
         float nearestDistance = float.MaxValue;
@@ -188,6 +202,10 @@ public class ArtifactSkillController : MonoBehaviour
         int dir = controller.FacingDir;
         //전격선이 끝날 때까지 조작 잠금
         IsLineCasting = true;
+        if (audioSource != null && electricLineSFX != null)
+        {
+            audioSource.PlayOneShot(electricLineSFX);
+        }
         SpawnLineVfx(lineVfx, skill, origin, dir);
         //전격선은 적이 없어도 사용 가능
         return true;

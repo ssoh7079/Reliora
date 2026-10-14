@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer bodyRenderer;
 
+    [Header("사운드")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip dashSFX;
+
     private Rigidbody2D rb;
     private Collider2D playerCollider;
     private Camera mainCam;
@@ -230,6 +234,10 @@ public class PlayerController : MonoBehaviour
         IsDash = true;
         dashTimer = dashDuration;
         ghostTimer = 0.0f;
+        if (audioSource != null && dashSFX != null)
+        {
+            audioSource.PlayOneShot(dashSFX);
+        }
         rb.linearVelocity = new Vector2(dashDir * dashSpeed, 0.0f);
     }
     private void DashUpdate()

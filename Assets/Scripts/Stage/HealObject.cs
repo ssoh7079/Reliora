@@ -7,8 +7,12 @@ public class HealObject : MonoBehaviour
 
     [SerializeField] private GameObject interactionPrompt;
 
+    [Header("사운드")]
+    [SerializeField] private AudioClip interactionSFX;
+
     private HealRoom healRoom;
     private PlayerStatus playerStatus;
+    private AudioSource playerAudioSource;
 
     private bool isPlayerInside;
     private bool isUsed;
@@ -31,6 +35,10 @@ public class HealObject : MonoBehaviour
         if (playerStatus == null) return;
 
         isUsed = true;
+        if (playerAudioSource != null && interactionSFX != null)
+        {
+            playerAudioSource.PlayOneShot(interactionSFX);
+        }
         int healAmount = Mathf.RoundToInt(playerStatus.MaxHp * healRate);
         playerStatus.Heal(healAmount);
         if (interactionPrompt != null) interactionPrompt.SetActive(false);
@@ -42,6 +50,7 @@ public class HealObject : MonoBehaviour
         PlayerStatus status = other.GetComponentInParent<PlayerStatus>();
         if (status == null) return;
         playerStatus = status;
+        playerAudioSource = status.GetComponent<AudioSource>();
         isPlayerInside = true;
         if (interactionPrompt != null) interactionPrompt.SetActive(true);
     }
@@ -51,6 +60,7 @@ public class HealObject : MonoBehaviour
         if (status == null) return;
         if (status != playerStatus) return;
         playerStatus = null;
+        playerAudioSource = null;
         isPlayerInside = false;
         if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }

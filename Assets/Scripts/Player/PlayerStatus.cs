@@ -12,6 +12,10 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private float hitDuration = 0.35f;
     [SerializeField] private Animator animator;
 
+    [Header("사운드")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitSFX;
+
     private PlayerController controller;
     private PlayerCombat combat;
     private MetaProgressData metaProgress;
@@ -93,6 +97,8 @@ public class PlayerStatus : MonoBehaviour
         int finalDamage = Mathf.Max(damage - Defense, 1);
         hp -= finalDamage;
         hp = Mathf.Max(hp, 0);
+
+        if (audioSource != null && hitSFX != null) audioSource.PlayOneShot(hitSFX);
 
         //확인용
         Debug.Log($"Player HP : {hp} / {maxHp}" + $"Damage : {finalDamage}" + $"Defense : {Defense}");

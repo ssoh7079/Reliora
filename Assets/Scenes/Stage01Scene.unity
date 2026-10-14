@@ -7172,6 +7172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealObject
   healRate: 0.6
   interactionPrompt: {fileID: 972327741}
+  interactionSFX: {fileID: 8300000, guid: a7977dc0b9b140740899ebf5fc382826, type: 3}
 --- !u!1 &121767463
 GameObject:
   m_ObjectHideFlags: 0
@@ -12241,6 +12242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomExit
   stageController: {fileID: 678038076}
   interactionPrompt: {fileID: 310724647}
+  interactionSFX: {fileID: 8300000, guid: b0441bfb2b78a10489756a348e0e126d, type: 3}
 --- !u!61 &529693255
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13250,6 +13252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomExit
   stageController: {fileID: 678038076}
   interactionPrompt: {fileID: 1811851794}
+  interactionSFX: {fileID: 8300000, guid: b0441bfb2b78a10489756a348e0e126d, type: 3}
 --- !u!61 &687546004
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14123,6 +14126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomExit
   stageController: {fileID: 678038076}
   interactionPrompt: {fileID: 1549490134}
+  interactionSFX: {fileID: 8300000, guid: b0441bfb2b78a10489756a348e0e126d, type: 3}
 --- !u!61 &767339189
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14339,6 +14343,11 @@ Transform:
   - {fileID: 696786468}
   m_Father: {fileID: 304179772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &832049765 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4368681615585468654, guid: a73810c1b6b50c049820be49ae914159, type: 3}
+  m_PrefabInstance: {fileID: 1197944540}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &864402958
 GameObject:
   m_ObjectHideFlags: 0
@@ -22741,6 +22750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomExit
   stageController: {fileID: 678038076}
   interactionPrompt: {fileID: 362229950}
+  interactionSFX: {fileID: 8300000, guid: b0441bfb2b78a10489756a348e0e126d, type: 3}
 --- !u!61 &1060127882
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22879,6 +22889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomExit
   stageController: {fileID: 678038076}
   interactionPrompt: {fileID: 693024157}
+  interactionSFX: {fileID: 8300000, guid: b0441bfb2b78a10489756a348e0e126d, type: 3}
 --- !u!61 &1072960743
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28569,6 +28580,108 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1197944542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1138189960
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 194566770659188161}
+    m_Modifications:
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4718915587124045757, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+      propertyPath: m_Name
+      value: InGameSettings
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+--- !u!224 &1138189961 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2840640825343393962, guid: 4c66f39128ac0774095028e7a5040526, type: 3}
+  m_PrefabInstance: {fileID: 1138189960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1155673785
 GameObject:
   m_ObjectHideFlags: 0
@@ -28730,6 +28843,10 @@ MonoBehaviour:
   lightningVfxSpeed: 2
   hammerVfxSpeed: 2.5
   lineVfxSpeed: 1.5
+  audioSource: {fileID: 832049765}
+  lightningSFX: {fileID: 8300000, guid: 6848178408754934da900c1b9313f26f, type: 3}
+  hammerSFX: {fileID: 8300000, guid: 3b6da315d7008ae4a9503f8c980fc5ed, type: 3}
+  electricLineSFX: {fileID: 8300000, guid: 6848178408754934da900c1b9313f26f, type: 3}
 --- !u!1 &1239044155
 GameObject:
   m_ObjectHideFlags: 0
@@ -29135,6 +29252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomExit
   stageController: {fileID: 678038076}
   interactionPrompt: {fileID: 916578237}
+  interactionSFX: {fileID: 8300000, guid: b0441bfb2b78a10489756a348e0e126d, type: 3}
 --- !u!61 &1373537783
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45013,6 +45131,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8007862688252372694, guid: ab7593379fc3be1469c07f346589d4c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1414639513}
+    - targetCorrespondingSourceObject: {fileID: 8007862688252372694, guid: ab7593379fc3be1469c07f346589d4c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1138189961}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 647444441122099180, guid: ab7593379fc3be1469c07f346589d4c1, type: 3}
       insertIndex: -1

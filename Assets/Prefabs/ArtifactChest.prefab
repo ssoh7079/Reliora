@@ -160,6 +160,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2030e914a92156d4f9597eac782dec2e, type: 2}
   - {fileID: 11400000, guid: bc8a4c9399f232949a28579c40269790, type: 2}
   interactionPrompt: {fileID: 712519580738721324}
+  interactionSFX: {fileID: 8300000, guid: dfc42a7d0de98584a810dc491404b772, type: 3}
 --- !u!1001 &1478133571261311221
 PrefabInstance:
   m_ObjectHideFlags: 0
