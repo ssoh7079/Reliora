@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StormChaserSet
   m_EditorClassIdentifier: Assembly-CSharp::ArtifactSetData
   setType: 0
-  setName: "\uD3ED\uD48D\uCD94\uC801\uC790"
+  setName: "\uB1CC\uBA85"
   firstArtifact: {fileID: 11400000, guid: 379d0f185f172684bbda1fae0106dae7, type: 2}
   secondArtifact: {fileID: 11400000, guid: 787c7ab2646d7eb44a6f8ea3d2918394, type: 2}
   skillType: 0

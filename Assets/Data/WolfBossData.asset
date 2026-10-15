@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b3a037a28738642adbb6fb49d1f7f4, type: 3}
   m_Name: WolfBossData
   m_EditorClassIdentifier: Assembly-CSharp::BossData
-  maxHp: 200
-  attackDamage: 15
-  moveSpeed: 3
-  patternRunSpeed: 7
+  maxHp: 350
+  attackDamage: 20
+  moveSpeed: 4.5
+  patternRunSpeed: 10
   attackSize: {x: 3.5, y: 2.5}
   attackRange: 1.8
-  attackCoolTime: 1
-  readyTime: 0.6
-  patternCoolTime: 4
-  patternReadyTime: 1.2
+  attackCoolTime: 0.9
+  readyTime: 0.5
+  patternCoolTime: 3.5
+  patternReadyTime: 1
   vanishTime: 1.2
   appearDistance: 1.5

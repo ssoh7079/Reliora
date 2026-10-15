@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HolyOathSet
   m_EditorClassIdentifier: Assembly-CSharp::ArtifactSetData
   setType: 1
-  setName: "\uC131\uC804\uC758 \uB9F9\uC138"
+  setName: "\uC218\uD638\uC790"
   firstArtifact: {fileID: 11400000, guid: a8fd24bdfb77a854bb7f375d62788ec5, type: 2}
   secondArtifact: {fileID: 11400000, guid: 731b051992317454c885833d840cb701, type: 2}
   skillType: 1

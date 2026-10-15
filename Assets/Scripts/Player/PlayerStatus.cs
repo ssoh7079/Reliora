@@ -135,10 +135,10 @@ public class PlayerStatus : MonoBehaviour
         if (amount <= 0) return;
 
         hp += amount;
-        hp = Mathf.Min(hp, maxHp);
+        hp = Mathf.Min(hp, MaxHp);
 
         //확인용
-        Debug.Log($"Player Heal : {hp} / {maxHp}");
+        Debug.Log($"Player Heal : {hp} / {MaxHp}");
     }
     public void SetArtifactStats(int defenseBonus, int maxHpBonus)
     {

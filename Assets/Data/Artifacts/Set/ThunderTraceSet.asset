@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ThunderTraceSet
   m_EditorClassIdentifier: Assembly-CSharp::ArtifactSetData
   setType: 0
-  setName: "\uB1CC\uAD11\uC758 \uADA4\uC801"
+  setName: "\uB1CC\uC804"
   firstArtifact: {fileID: 11400000, guid: 2030e914a92156d4f9597eac782dec2e, type: 2}
   secondArtifact: {fileID: 11400000, guid: bc8a4c9399f232949a28579c40269790, type: 2}
   skillType: 2

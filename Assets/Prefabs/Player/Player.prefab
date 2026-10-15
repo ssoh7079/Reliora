@@ -195,6 +195,8 @@ MonoBehaviour:
   bodyRenderer: {fileID: 7277367419302556246}
   audioSource: {fileID: 4368681615585468654}
   dashSFX: {fileID: 8300000, guid: 95f7ad0e7c34d2642ba389891e763fc5, type: 3}
+  jumpSFX: {fileID: 8300000, guid: 7308d5e3dce0e334d9ac9912f200f3b4, type: 3}
+  footstepSFX: {fileID: 8300000, guid: bcb2a1fadf261324da66c19ab4051bde, type: 3}
 --- !u!114 &6742058838317502613
 MonoBehaviour:
   m_ObjectHideFlags: 0

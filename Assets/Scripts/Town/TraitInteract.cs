@@ -18,6 +18,7 @@ public class TraitInteract : MonoBehaviour
     }
     void Update()
     {
+        if (Time.timeScale == 0.0f) return;
         UpdatePrompt();
         if (player == null) return;
         if (Keyboard.current == null) return;

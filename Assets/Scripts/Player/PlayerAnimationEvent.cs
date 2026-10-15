@@ -3,10 +3,12 @@
 public class PlayerAnimationEvent : MonoBehaviour
 {
     private PlayerCombat combat;
+    private PlayerController controller;
 
     private void Awake()
     {
         combat = GetComponentInParent<PlayerCombat>();
+        controller = GetComponentInParent<PlayerController>();
     }
 
     public void AttackHit()
@@ -16,5 +18,9 @@ public class PlayerAnimationEvent : MonoBehaviour
     public void AttackEnd()
     {
         combat.AttackEnd();
+    }
+    public void Footstep()
+    {
+        controller?.PlayFootstepSFX();
     }
 }
