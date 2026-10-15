@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("점프")]
     [SerializeField] private float jumpPower = 15.0f;
+    [SerializeField] private float jumpCutMultiplier = 0.45f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundRadius = 0.15f;
     [SerializeField] private LayerMask groundLayer;
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [Header("사운드")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip dashSFX;
+    [SerializeField] private AudioClip jumpSFX;
+    [SerializeField] private AudioClip footstepSFX;
 
     private Rigidbody2D rb;
     private Collider2D playerCollider;
@@ -85,6 +88,11 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (Time.timeScale == 0.0f)
+        {
+            moveX = 0.0f;
+            return;
+        }
         if (dashCoolTimer > 0.0f) dashCoolTimer -= Time.deltaTime;
         if (status.IsDead || status.IsHit)
         {
@@ -116,6 +124,7 @@ public class PlayerController : MonoBehaviour
         Dash();
         if (IsDash) return;
         Jump();
+        JumpCut();
 
         if (!combat.IsAttack)
         {
@@ -161,6 +170,14 @@ public class PlayerController : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
     }
+    public void PlayFootstepSFX()
+    {
+        if (!isGround) return;
+        if (Mathf.Abs(moveX) <= 0.01f) return;
+        if (audioSource == null || footstepSFX == null) return;
+
+        audioSource.PlayOneShot(footstepSFX);
+    }
     private void Jump()
     {
         if (!Keyboard.current.spaceKey.wasPressedThisFrame) return;
@@ -172,7 +189,19 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
 
+        if (audioSource != null && jumpSFX != null)
+        {
+            audioSource.PlayOneShot(jumpSFX);
+        }
+
         jumpCount++;
+    }
+    private void JumpCut()
+    {
+        if (!Keyboard.current.spaceKey.wasReleasedThisFrame) return;
+        if (rb.linearVelocity.y <= 0.0f) return;
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier);
     }
     private void CheckGround()
     {

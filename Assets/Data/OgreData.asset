@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603ef137b6791f444b7c9f0350b27213, type: 3}
   m_Name: OgreData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHp: 30
-  attackDamage: 10
-  moveSpeed: 2
+  maxHp: 45
+  attackDamage: 12
+  moveSpeed: 4
   attackSize: {x: 2.6, y: 3}
   attackRange: 2
+  attackHeightRange: 1.2
   detectRange: 6
   attackCoolTime: 1.3
+  patrolSpeed: 1.5
+  patrolDistance: 2
+  patrolWaitTime: 1

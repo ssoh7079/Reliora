@@ -52,6 +52,7 @@ public class PlayerCombat : MonoBehaviour
     }
     void Update()
     {
+        if (Time.timeScale == 0.0f) return;
         if (status.IsDead || status.IsHit || 
             controller.IsControlLocked || controller.IsDash || 
             IsAttack || (skillController != null && skillController.IsLineCasting)) return;

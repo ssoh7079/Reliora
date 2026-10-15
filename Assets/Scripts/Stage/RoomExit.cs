@@ -20,6 +20,7 @@ public class RoomExit : MonoBehaviour
     }
     void Update()
     {
+        if (Time.timeScale == 0.0f) return;
         if (!isPlayerInside) return;
         if (Keyboard.current == null) return;
         if (Keyboard.current.fKey.wasPressedThisFrame)
