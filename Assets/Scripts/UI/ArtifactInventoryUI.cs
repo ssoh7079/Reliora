@@ -46,6 +46,7 @@ public class ArtifactInventoryUI : MonoBehaviour
 
     // 창이 닫힌 프레임에도 공격 입력이 넘어가지 않게
     public bool BlocksAttack => inventoryPanel.activeSelf || closeFrame == Time.frameCount;
+    public bool IsOpen => inventoryPanel.activeSelf;
 
 
     private void Awake()
