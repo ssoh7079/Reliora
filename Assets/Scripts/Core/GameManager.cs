@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +8,7 @@ public class GameManager : MonoBehaviour
     public RunData CurrentRun {  get; private set; }
     public MetaProgressData MetaProgress { get; private set; }
 
+    private const string TitleScene = "TitleScene";
     private const string TownScene = "TownScene";
     private const string StageScene = "Stage01Scene";
 
@@ -27,11 +27,7 @@ public class GameManager : MonoBehaviour
         MetaProgress = new MetaProgressData();
         MetaProgress.Load();
     }
-    private void Update()
-    {
-        if (Keyboard.current == null) return;
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) Application.Quit();
-    }
+    
 
     public void EnterDungeon()
     {
@@ -61,7 +57,12 @@ public class GameManager : MonoBehaviour
         CurrentRun.Reset();
         SceneManager.LoadScene(TownScene);
     }
-
+    public void ReturnToTitle()
+    {
+        Time.timeScale = 1.0f;
+        CurrentRun.Reset();
+        SceneManager.LoadScene(TitleScene);
+    }
 
     [ContextMenu("Reset Meta Progress")]
     private void ResetMetaProgress()
