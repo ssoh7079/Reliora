@@ -2,6 +2,7 @@
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+[DefaultExecutionOrder(-1000)]
 public class AudioSettingsUI : MonoBehaviour
 {
     [Header("오디오")]
