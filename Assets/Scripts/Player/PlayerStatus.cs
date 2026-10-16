@@ -90,7 +90,7 @@ public class PlayerStatus : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if (IsDead || IsHit) return;
+        if (IsDead || IsHit || controller.IsDash) return;
         //공격 중이었다면 강제 종료
         combat.CancelAttack();
 
